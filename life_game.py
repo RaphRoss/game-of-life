@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import os
+import argparse
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -47,5 +48,23 @@ def main(size=20, iterations=100):
         grid = update_grid(grid)
         time.sleep(0.5)  # Pause pour voir les changements
 
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Jeu de la Vie")
+    parser.add_argument(
+        "size",
+        nargs="?",
+        type=int,
+        default=20,
+        help="taille de la grille (entier > 0)",
+    )
+    args = parser.parse_args()
+
+    if args.size <= 0:
+        parser.error("'size' doit etre un entier strictement positif")
+
+    return args
+
 if __name__ == "__main__":
-    main()
+    arguments = parse_args()
+    main(size=arguments.size)
